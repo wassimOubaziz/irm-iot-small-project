@@ -13,15 +13,19 @@ This is a simple chat application built using Java RMI (Remote Method Invocation
 
 1. **Running the Server**:
    - Compile and run the `Server` class. Make sure to specify the IP address where the RMI registry will run if needed.
-     ```bash java Server
+     ```bash
+     java Server
+     ```
 
 2. **Running the Client GUIs**:
    - Compile and run the `ClientGui` class to launch the client GUI for sending messages.
      ```bash
-   java ClientGui
+      java ClientGui
+     ```
    - Compile and run the `HealthCareGui` class to launch the healthcare provider GUI for viewing and removing messages.
      ```bash
-   java HealthCareGui
+      java HealthCareGui
+     ```
 
 ## Dependencies
 
