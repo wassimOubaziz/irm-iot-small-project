@@ -4,12 +4,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ServiceImpl extends UnicastRemoteObject implements Service {
+public class ServiceImpl implements Service {
+
+    private List<HealthCare> healthCares;
 
     protected ServiceImpl() throws RemoteException {
         super();
+        healthCares = new ArrayList<>();
     }
 
     @Override
@@ -53,4 +57,26 @@ public class ServiceImpl extends UnicastRemoteObject implements Service {
             return "Error fetching weather data";
         }
     }
+
+    @Override
+    public void checkHeathFailed(double lat, double lon, String name) throws RemoteException {
+        // send to health care Client side lat and lon and name
+
+    }
+
+    @Override
+    public void sendMessage(String message) throws RemoteException {
+        System.out.println("Received message from client: " + message);
+        // Process the message as needed
+        // Notify all registered clients
+        for (HealthCare healthCare : healthCares) {
+            healthCare.receiveMessage(message);
+        }
+    }
+
+    @Override
+    public void registerClient(HealthCare healthCare) throws RemoteException {
+        healthCares.add(healthCare);
+    }
+
 }
