@@ -14,6 +14,9 @@ This is a simple chat application built using Java RMI (Remote Method Invocation
 1. **Running the Server**:
    - Compile and run the `Server` class. Make sure to specify the IP address where the RMI registry will run if needed.
      ```bash
+     javac *.java
+     ```
+     ```bash
      java Server
      ```
 
