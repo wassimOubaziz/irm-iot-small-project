@@ -1,35 +1,43 @@
-
-// ChatServer.java
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
-import java.rmi.*;
-import java.rmi.registry.*;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChatServer extends UnicastRemoteObject implements ChatServerInterface {
+public class ChatServer implements ChatServerInterface {
     private static final long serialVersionUID = 1L;
     private Map<String, ChatClientInterface> connectedClients;
     private HealthCareClientInterface healthCareClient;
     private List<String> messages; // List to hold messages
 
-    protected ChatServer() throws RemoteException {
-        super();
+    public ChatServer() {
         connectedClients = new HashMap<>();
         messages = new ArrayList<>();
     }
 
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.createRegistry(1098);
+            // Set hostname for the server using javaProperty
+            System.setProperty("java.rmi.server.hostname", "192.168.43.59");
+            System.out.println("Server is running on port 9100...");
+
             ChatServer server = new ChatServer();
-            registry.rebind("ChatServer", server);
+
+            ChatServerInterface stub = (ChatServerInterface) UnicastRemoteObject.exportObject(server, 0);
+
+            Registry registry = LocateRegistry.createRegistry(9100);
+            registry.rebind("ChatServer", stub);
+
             System.out.println("Server is running...");
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
@@ -114,5 +122,4 @@ public class ChatServer extends UnicastRemoteObject implements ChatServerInterfa
             return "Error fetching weather data";
         }
     }
-
 }

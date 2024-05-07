@@ -23,8 +23,8 @@ public class ClientGui extends JFrame {
         super(name);
 
         try {
-            Registry registry = LocateRegistry.getRegistry("192.168.144.254", 1098); // change this with your ip address
-                                                                                     // (server ip address)
+            Registry registry = LocateRegistry.getRegistry("192.168.43.59", 1098); // change this with your ip address
+                                                                                   // (server ip address)
             server = (ChatServerInterface) registry.lookup("ChatServer");
             server.registerClient(name, new ChatClientImpl());
 
